@@ -365,6 +365,1285 @@
     }
 
     .action-btn.delete:hover { background: rgba(255, 0, 0, 0.5); border-color: red; }
+    /* BARIS CSS UNTUK .action-btn.reset DIHAPUS */
+
+    /* Pastikan tombol aksi terlihat saat hover pada kotak */
+    .editable-box:hover .box-actions {
+        opacity: 1 !important; 
+    }
+
+    /* Override opacity saat box dikunci. Tombol aksi tetap disembunyikan jika dikunci. */
+    .editable-box.locked:hover .box-actions {
+        opacity: 0 !important;
+    }
+    /* Pastikan tombol aksi terlihat hanya jika unlocked */
+    .editable-box.editable .box-actions {
+        opacity: 1 !important;
+    }
+
+
+    /* ========== PARTICLE BACKGROUND ========== */
+    .particles {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: -1;
+    }
+
+    .particle {
+        position: absolute;
+        background: radial-gradient(circle, rgba(0,255,255,0.2), transparent);
+        border-radius: 50%;
+        animation: float 15s infinite linear;
+    }
+
+    @keyframes float {
+        0% { transform: translateY(100vh) rotate(0deg) scale(0); opacity: 0; }
+        10% { opacity: 1; transform: scale(1); }
+        90% { opacity: 1; }
+        100% { transform: translateY(-100px) rotate(360deg) scale(1.5); opacity: 0; }
+    }
+
+    /* ========== MODAL STYLES ========== */
+    .modal {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 2000;
+        justify-content: center; align-items: center;
+    }
+
+    .modal-content {
+        background: #111;
+        padding: 2rem;
+        border-radius: 15px;
+        border: 1px solid var(--primary-color);
+        text-align: center;
+        box-shadow: 0 10px 40px rgba(0, 255, 255, 0.2);
+    }
+
+    .modal input {
+        padding: 0.8rem;
+        border: 1px solid var(--primary-color);
+        background: #000;
+        color: var(--text-color);
+        border-radius: 5px;
+        margin: 1rem 0;
+    }
+
+    .modal button {
+        padding: 0.8rem 1.5rem;
+        background: var(--primary-color);
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 0.5rem;
+    }
+
+    .modal button:hover { background: var(--secondary-color); }
+
+    /* ========== RESPONSIVE DESIGN ========== */
+    @media (max-width: 768px) {
+        nav { padding: 1rem; }
+        .logo { font-size: 1.5rem; }
+        .page { padding: 6rem 1rem 1rem; }
+        h1 { font-size: 2.2rem; }
+        .subjudul { font-size: 1.5rem; }
+        .dropdown { min-width: 180px; }
+        .search-input { padding: 0.6rem 1rem; font-size: 0.9rem; }
+    }
+</style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+<div class="loading" id="loading">
+    <div class="loading-spinner"></div>
+</div>
+
+<nav>
+    <div class="logo" onclick="app.toggleAllLocks()">ALTRADEV</div>
+    <div class="menu-toggle" id="menuToggle">
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="dropdown" id="dropdown">
+            <button class="nav-btn active" data-page="1">Metode Inject</button>
+            <button class="nav-btn" data-page="2">Arsip Bug</button>
+            <button class="nav-btn" data-page="3">Akun SSH/V2Ray</button>
+        </div>
+    </div>
+</nav>
+
+<div class="modal" id="passwordModal">
+    <div class="modal-content">
+        <h2>Masukkan Password</h2>
+        <input type="password" id="pwInput" placeholder="Password...">
+        <br>
+        <button onclick="app.checkPassword()">Buka</button>
+        <button onclick="app.closeModal()">Batal</button>
+    </div>
+</div>
+
+<section class="page active" id="page1">
+    <h1>Metode Inject</h1>
+    <div class="search-container">
+        <input type="text" class="search-input" id="search-page1" placeholder="Cari di Metode Inject...">
+    </div>
+    <button class="add-btn" onclick="app.addBox('page1')">+ Tambah Kotak</button>
+
+    <div id="boxes-page1">
+        <div class="editable-box locked" contenteditable="false" data-key="ssh-content">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">SSH (Secure Shell)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Elemen Penting: SSH Host/Port/Username/Password (dari sshocean.com).</li>
+                <li class="list-item" data-editable-child="true">Payload Basic: GET / HTTP/1.1[crlf]Host: [host][crlf]Upgrade: websocket[crlf][crlf]</li>
+                <li class="list-item" data-editable-child="true">App Rekom: HTTP Injector atau KPN Tunnel (import .ehi).</li>
+                <li class="list-item" data-editable-child="true">Setup Dasar: 1. Buat akun SSH gratis (host: id.sshocean.com, port: 443). 2. Di app: SSH tab > Masukin detail > Payload Generator > Paste payload > Start.</li>
+                <li class="list-item" data-editable-child="true">Connected: Hijau, speed 5-10Mbps. Edit: Ganti payload kalau error 403.</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Cocok buat Telkomsel/XL, renew server 3-7 hari.</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="vless-content">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">VLESS (V2Ray Lightweight)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Elemen Penting: UUID (generate random), SNI (domain aman seperti www.google.com), TLS enabled. Gak butuh payload full.</li>
+                <li class="list-item" data-editable-child="true">String Config: vless://uuid@host:443?type=ws&security=tls&sni=[sni]&path=/vless#ArsipVLESS</li>
+                <li class="list-item" data-editable-child="true">App Rekom: V2RayNG atau NapsternetV (import JSON/string).</li>
+                <li class="list-item" data-editable-child="true">Setup Dasar: 1. Buat akun VLESS di jagoanssh.com. 2. Di app: + > Import > Paste string > Edit SNI. 3. Path: /vless (default WS).</li>
+                <li class="list-item" data-editable-child="true">Connect: "VLESS Active". Speed 10-20Mbps, renew 7 hari.</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Bagus buat streaming, susah deteksi DPI provider.</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="vmess-content">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">VMess (V2Ray Mess)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Elemen Penting: UUID + AlterID (0 simple), Path WS (/vmess), Security: tls. Payload optional.</li>
+                <li class="list-item" data-editable-child="true">String Config: vmess://base64-json dengan uuid@host:443?type=ws&path=/vmess&security=tls&sni=[sni]#ArsipVMess</li>
+                <li class="list-item" data-editable-child="true">App Rekom: V2RayNG atau HTTP Injector (via .ehi).</li>
+                <li class="list-item" data-editable-child="true">Setup Dasar: 1. Buat akun VMess di fastssh.com. 2. Import string > Edit path/SNI. 3. Mux: Enable buat speed boost.</li>
+                <li class="list-item" data-editable-child="true">Start: "VMess Handshake OK". Cocok all-operator, expire 30 hari premium.</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Fleksibel buat mux connection.</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="trojan-content">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Trojan</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Elemen Penting: Password (plain text), SNI wajib (mimic HTTPS), Port 443. Gak ada payload kompleks.</li>
+                <li class="list-item" data-editable-child="true">String Config: trojan://pass@host:443?sni=[sni]&allowInsecure=0#ArsipTrojan</li>
+                <li class="list-item" data-editable-child="true">App Rekom: V2RayNG atau NapsternetV.</li>
+                <li class="list-item" data-editable-child="true">Setup Dasar: 1. Generate di sshocean.com. 2. Import > Edit SNI. 3. Fake Host: Tambah buat bypass.</li>
+                <li class="list-item" data-editable-child="true">Connect: No error = unlimited. Stabil game, low latency.</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Super aman buat Telkomsel ketat.</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="ss-content">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Shadowsocks (SS)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Elemen Penting: Password + Method (aes-256-gcm), Server/Port. Payload mirip SSH.</li>
+                <li class="list-item" data-editable-child="true">String Config: ss://method:pass@host:8388#ArsipSS</li>
+                <li class="list-item" data-editable-child="true">App Rekom: HTTP Injector (built-in) atau Shadowsocks app.</li>
+                <li class="list-item" data-editable-child="true">Setup Dasar: 1. Buat server SS di jagoanssh.com. 2. Shadowsocks tab > Masukin host: id.ss.jagoanssh.com, port: 8388, pass/method. 3. Payload (ops): CONNECT [host_port] HTTP/1.1[crlf]Host: [host][crlf][crlf].</li>
+                <li class="list-item" data-editable-child="true">Start: "SS Tunnel Up". Cepet daily, method ganti chacha20 kalau lambat.</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Sederhana buat basic inject.</li>
+            </ul>
+        </div>
+        </div>
+</section>
+
+<section class="page" id="page2">
+    <h1>Arsip Bug</h1>
+    <div class="search-container">
+        <input type="text" class="search-input" id="search-page2" placeholder="Cari di Arsip Bug...">
+    </div>
+    <button class="add-btn" onclick="app.addBox('page2')">+ Tambah Kotak</button>
+    <div id="boxes-page2">
+        <div class="editable-box locked" contenteditable="false" data-key="bug-sub1">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Bug Telkomsel (Unlimited Sosmed/Game)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Zero-rated Host: whatsapp.com / m.facebook.com</li>
+                <li class="list-item" data-editable-child="true">Expire: 17 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Speed: 5-10Mbps, cocok streaming</li>
+                <li class="list-item" data-editable-child="true">Patch Risk: Tinggi, test harian</li>
+                <li class="list-item" data-editable-child="true">Config Link: sfile.mobi/download/config-telkomsel-nov2025.ehi</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="bug-sub2">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Bug XL Axiata (Kuota Harian Gratis)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Zero-rated Host: www.youtube.com / edu.xl.co.id</li>
+                <li class="list-item" data-editable-child="true">Expire: 12 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Limit: 30GB/hari, full speed</li>
+                <li class="list-item" data-editable-child="true">Patch Risk: Sedang, ganti SNI sering</li>
+                <li class="list-item" data-editable-child="true">Config Link: sfile.mobi/download/xl-inject-nov2025.ehi</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="bug-sub3">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Bug Indosat IM3 (Edukasi 30GB)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Zero-rated Host: im3.co.id/edukasi / zoom.us</li>
+                <li class="list-item" data-editable-child="true">Expire: 15 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Limit: 30GB/bulan, buat belajar</li>
+                <li class="list-item" data-editable-child="true">Patch Risk: Rendah, stabil</li>
+                <li class="list-item" data-editable-child="true">Config Link: sfile.mobi/download/indosat-config-2025.ehi</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="bug-sub4">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Bug Axis (Game Unli)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Zero-rated Host: garena.com / freefire.com</li>
+                <li class="list-item" data-editable-child="true">Expire: 11 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Speed: Unlimited game, low latency</li>
+                <li class="list-item" data-editable-child="true">Patch Risk: Tinggi, FB group update</li>
+                <li class="list-item" data-editable-child="true">Config Link: facebook.com/groups/1274757915928136/posts/32242320228745166/</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="page" id="page3">
+    <h1>Akun SSH/V2Ray</h1>
+    <div class="search-container">
+        <input type="text" class="search-input" id="search-page3" placeholder="Cari di Akun SSH/V2Ray...">
+    </div>
+    <button class="add-btn" onclick="app.addBox('page3')">+ Tambah Kotak</button>
+    <div id="boxes-page3">
+        <div class="editable-box locked" contenteditable="false" data-key="ssh-sub1">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Server SSHOcean (SSH/SSL)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Host: id.sshocean.com:443</li>
+                <li class="list-item" data-editable-child="true">Username: freeuser2025 / Password: freepassnov</li>
+                <li class="list-item" data-editable-child="true">Expire: 14 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Mode: SSH/SSL, TLS enabled</li>
+                <li class="list-item" data-editable-child="true">Ping: Low (ID server)</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="ssh-sub2">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Server JagoanSSH (VLESS/VMess)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Host: sg.jagoanssh.com:443</li>
+                <li class="list-item" data-editable-child="true">UUID: a1b2c3d4-e5f6-7890-abcd-ef1234567890</li>
+                <li class="list-item" data-editable-child="true">Expire: 18 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Path: /vless, SNI: www.netflix.com</li>
+                <li class="list-item" data-editable-child="true">Mode: WS/TLS, speed 15Mbps</li>
+                <li class="list-item" data-editable-child="true">Update Nov 2025: Bagus buat streaming, susah deteksi DPI provider.</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="ssh-sub3">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Server FastSSH (Trojan/SS)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Host: id.fastssh.com:443</li>
+                <li class="list-item" data-editable-child="true">Password: trojanpass2025</li>
+                <li class="list-item" data-editable-child="true">Expire: 16 Nov 2025</li>
+                <li class="list-item" data-editable-child="true">Method: aes-256-gcm (SS)</li>
+                <li class="list-item" data-editable-child="true">SNI: m.facebook.com, unlimited</li>
+            </ul>
+        </div>
+
+        <div class="editable-box locked" contenteditable="false" data-key="ssh-sub4">
+            <span class="lock-icon" onclick="app.toggleLock(this)">🔒</span>
+            <div class="subjudul" data-editable-child="true">Server UdpCustom (SlowDNS)</div>
+            <ul>
+                <li class="list-item" data-editable-child="true">Host: id1.udpcustom.com:53</li>
+                <li class="list-item" data-editable-child="true">DNS: 8.8.8.8 / 1.1.1.1</li>
+                <li class="list-item" data-editable-child="true">Expire: Unlimited (renew manual)</li>
+                <li class="list-item" data-editable-child="true">Mode: SlowDNS, speed 1-5Mbps</li>
+                <li class="list-item" data-editable-child="true">Cocok: Provider ketat, no SSH</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<script>
+    // ALTRADEV App - Main Application Object
+    const app = {
+        isUnlocked: localStorage.getItem('isUnlocked') === 'true', 
+        CORRECT_PASSWORD: 'altranet', 
+        defaultBoxContents: {},
+        deletedKeys: JSON.parse(localStorage.getItem('deletedKeys') || '[]'), 
+
+        // ========== INITIALIZATION ==========
+        init: function() {
+            // 1. Simpan konten default untuk kotak yang sudah ada (hardcoded)
+            // Lakukan pembersihan sebelum menyimpan default content
+            Array.from(document.querySelectorAll('[data-key]')).forEach(el => {
+                const key = el.dataset.key;
+                
+                // Hapus Lock Icon dan Box Actions dari innerHTML sebelum disimpan (untuk konten murni)
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = el.innerHTML;
+                tempDiv.querySelector('.lock-icon')?.remove();
+                tempDiv.querySelector('.box-actions')?.remove();
+                
+                // Hapus atribut contentEditable dari semua elemen anak sebelum disimpan (untuk kebersihan)
+                tempDiv.querySelectorAll('[data-editable-child="true"]').forEach(child => {
+                     child.removeAttribute('contenteditable');
+                });
+                
+                this.defaultBoxContents[key] = tempDiv.innerHTML; // Konten HTML bawaan murni
+                
+                // Hapus konten bawaan dari DOM untuk dimuat ulang dari LocalStorage
+                el.innerHTML = ''; 
+            });
+            
+            // 2. Filter kotak bawaan yang sudah ditandai dihapus
+            this.filterInitialBoxes();
+            
+            // 3. Muat data tersimpan dari Local Storage (Mengisi konten)
+            this.loadData();
+
+            // 4. Pastikan tombol aksi ada di SEMUA kotak 
+            this.ensureBoxActionsExist();
+
+            this.setupEventListeners();
+            this.createParticles();
+            // 5. Update status kunci terakhir (terapkan contentEditable yang benar)
+            this.updateLockState(this.isUnlocked);
+            
+            // 6. SETUP FITUR SEARCH BARU
+            this.setupSearch();
+        },
+        
+        filterInitialBoxes: function() {
+            // Hapus kotak bawaan yang key-nya ada di 'deletedKeys' dari DOM
+            document.querySelectorAll('.editable-box').forEach(box => {
+                const key = box.dataset.key;
+                if (this.defaultBoxContents[key] && this.deletedKeys.includes(key)) {
+                    box.remove();
+                }
+            });
+        },
+        
+        ensureBoxActionsExist: function() {
+            // Iterasi ke semua kotak yang ada di DOM (termasuk yang baru dimuat dari storage)
+            document.querySelectorAll('.editable-box').forEach(box => {
+                const lockIcon = box.querySelector('.lock-icon');
+                let actionContainer = box.querySelector('.box-actions');
+
+                // Hapus action container lama jika ada (untuk menghindari duplikasi saat update)
+                if (actionContainer) actionContainer.remove();
+
+                // Buat action container baru
+                actionContainer = document.createElement('div');
+                actionContainer.className = 'box-actions';
+                
+                // Tombol Delete selalu ada
+                actionContainer.innerHTML = `
+                   <button class="action-btn delete" onclick="app.deleteBox(this)">🗑️ Hapus</button>
+                `;
+                
+                // Inject setelah ikon kunci
+                if (lockIcon) {
+                    lockIcon.after(actionContainer);
+                } else {
+                    box.prepend(actionContainer);
+                }
+                
+                // Set opacity berdasarkan status terkunci
+                actionContainer.style.opacity = this.isUnlocked ? 1 : 0; 
+            });
+        },
+
+
+        // ========== EVENT HANDLERS & NAVIGATION ==========
+        setupEventListeners: function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const dropdown = document.getElementById('dropdown');
+
+            const closeDropdown = () => {
+                if (menuToggle && dropdown) {
+                    menuToggle.classList.remove('active');
+                    dropdown.classList.remove('active');
+                }
+            };
+
+            // Prevent edit when locked (Diperkuat)
+            document.addEventListener('keydown', e => {
+                const box = e.target.closest('.editable-box');
+                // Cek apakah target adalah elemen yang seharusnya bisa diedit
+                const isEditableChild = e.target.closest('[data-editable-child="true"]');
+                if (box && !this.isUnlocked && (box.contentEditable === 'false' || isEditableChild)) {
+                    e.preventDefault();
+                    this.showModal(); 
+                }
+            });
+
+            document.addEventListener('beforeinput', e => {
+                 const box = e.target.closest('.editable-box');
+                 const isEditableChild = e.target.closest('[data-editable-child="true"]');
+                 if (box && !this.isUnlocked && (box.contentEditable === 'false' || isEditableChild)) {
+                    e.preventDefault();
+                    this.showModal();
+                }
+            });
+
+            // Auto-Save: Save to localStorage on input
+            document.addEventListener('input', e => {
+                const box = e.target.closest('.editable-box');
+                if (box && box.dataset.key && this.isUnlocked) { // Pastikan hanya simpan saat unlocked
+                    this.saveBoxContent(box.dataset.key, box.innerHTML);
+                }
+            });
+            
+            // Tambahkan event listener untuk fitur COPY ON CLICK
+            document.addEventListener('click', e => {
+                const listItem = e.target.closest('.list-item');
+                const subjudul = e.target.closest('.subjudul');
+                
+                if (listItem || subjudul) {
+                    // Hanya salin jika bukan dalam mode edit (unlocked)
+                    if (!this.isUnlocked) {
+                         const textToCopy = (listItem || subjudul).textContent.trim();
+                         this.copyText(textToCopy);
+                    }
+                }
+            });
+
+
+            // Menu Toggle
+            if (menuToggle && dropdown) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    menuToggle.classList.toggle('active');
+                    dropdown.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!menuToggle.contains(e.target)) {
+                        closeDropdown();
+                    }
+                });
+            }
+
+            // Navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pageNum = btn.dataset.page;
+                    if (pageNum) {
+                        this.navigateToPage(pageNum);
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        closeDropdown();
+                    }
+                });
+            });
+
+            window.addEventListener('scroll', closeDropdown);
+        },
+        
+        // FUNGSI BARU: COPY TEXT TO CLIPBOARD
+        copyText: function(text) {
+            if (!navigator.clipboard) {
+                // Fallback untuk browser lama
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed'; 
+                textarea.style.top = 0;
+                textarea.style.left = 0;
+                textarea.style.opacity = 0;
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('Teks disalin: ' + text);
+                } catch (err) {
+                    console.error('Gagal menyalin: ', err);
+                    alert('Gagal menyalin teks. Silakan salin manual.');
+                }
+                document.body.removeChild(textarea);
+                return;
+            }
+            
+            // Modern Clipboard API
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Teks disalin: ' + text);
+            }).catch(err => {
+                console.error('Gagal menyalin: ', err);
+                alert('Gagal menyalin teks. Silakan salin manual.');
+            });
+        },
+        
+        // ========== FITUR SEARCH BARU ==========
+        setupSearch: function() {
+            // Tambahkan event listener untuk setiap search input
+            ['search-page1', 'search-page2', 'search-page3'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    // Gunakan 'input' event agar filtering terjadi secara real-time
+                    input.addEventListener('input', (e) => {
+                        const pageId = e.target.id.replace('search-', ''); // e.g., 'page1'
+                        this.filterBoxes(pageId, e.target.value);
+                    });
+                }
+            });
+        },
+        
+        filterBoxes: function(pageId, searchTerm) {
+            const container = document.getElementById(`boxes-${pageId}`);
+            if (!container) return;
+
+            const boxes = container.querySelectorAll('.editable-box');
+            const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+
+            boxes.forEach(box => {
+                // Ambil semua teks dalam kotak, termasuk subjudul dan list-item
+                const boxText = box.textContent.toLowerCase();
+                
+                if (lowerCaseSearchTerm === '') {
+                    // Jika kolom pencarian kosong, tampilkan semua kotak
+                    box.style.display = 'block';
+                } else if (boxText.includes(lowerCaseSearchTerm)) {
+                    // Jika teks kotak mengandung istilah pencarian, tampilkan
+                    box.style.display = 'block';
+                } else {
+                    // Sembunyikan jika tidak ada kecocokan
+                    box.style.display = 'none';
+                }
+            });
+        },
+
+
+        // ========== NAVIGATION & LOADING BAR SPINNER ==========
+        navigateToPage: function(pageNum) {
+            const loading = document.getElementById('loading');
+            if (!loading) return;
+
+            loading.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            // Reset search input saat pindah halaman
+            document.getElementById(`search-page${pageNum}`).value = '';
+            // Panggil filterBoxes untuk memastikan semua kotak tampil saat halaman dimuat
+            this.filterBoxes(`page${pageNum}`, ''); 
+
+
+            // Simulasi loading 500ms
+            setTimeout(() => {
+                // Sembunyikan loading
+                loading.style.display = 'none';
+                document.body.style.overflow = 'auto';
+
+                // Ganti page
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                const targetPage = document.getElementById(`page${pageNum}`);
+                if (targetPage) {
+                    targetPage.classList.add('active');
+                }
+            }, 500); 
+        },
+
+        // ========== UNLOCK SYSTEM (Diperkuat) ==========
+        updateLockState: function(unlocked) {
+            this.isUnlocked = unlocked;
+            localStorage.setItem('isUnlocked', String(unlocked));
+
+            document.querySelectorAll('.editable-box').forEach(box => {
+                const lockIcon = box.querySelector('.lock-icon');
+                const actionBox = box.querySelector('.box-actions');
+                
+                // Cek apakah ini kotak dinamis (tidak punya default content)
+                const isDynamicBox = !this.defaultBoxContents[box.dataset.key];
+                
+                // 1. Atur kelas utama
+                box.classList.toggle('locked', !unlocked);
+                box.classList.toggle('editable', unlocked);
+                
+                // 2. Atur contentEditable pada Box Utama
+                // HANYA kotak dinamis yang contenteditable="true" di level box
+                box.contentEditable = String(unlocked && isDynamicBox); 
+                
+                // 3. Atur contentEditable pada Anak Elemen (list-item, subjudul)
+                box.querySelectorAll('[data-editable-child="true"]').forEach(child => {
+                    // Elemen anak SELALU bisa diedit (jika unlocked)
+                    if (unlocked) {
+                       child.setAttribute('contenteditable', 'true');
+                    } else {
+                       child.removeAttribute('contenteditable');
+                    }
+                });
+
+                // 4. Update ikon kunci
+                if (lockIcon) lockIcon.textContent = unlocked ? '🔓' : '🔒';
+                
+                // 5. Update tampilan tombol aksi
+                if (actionBox) actionBox.style.opacity = unlocked ? 1 : 0;
+            });
+        },
+
+        // ========== DATA MANAGEMENT (Diperkuat) ==========
+        loadData: function() {
+            // 1. Load data untuk semua kotak bawaan yang tersisa di HTML
+            Array.from(document.querySelectorAll('.editable-box')).forEach(el => {
+                const key = el.dataset.key;
+                const saved = localStorage.getItem(key);
+                
+                // Konten yang akan dimuat: dari Local Storage jika ada, atau dari default jika kotak bawaan
+                const contentToLoad = saved || this.defaultBoxContents[key] || '';
+                
+                // Masukkan konten
+                el.innerHTML = contentToLoad; 
+                
+                // Set data-editable-child ke anak-anak yang relevan
+                el.querySelectorAll('.subjudul, .list-item').forEach(child => {
+                     child.setAttribute('data-editable-child', 'true');
+                });
+                
+                // JANGAN LUPA: Tambahkan kembali ikon kunci ke DOM
+                const lockIconHTML = `<span class="lock-icon" onclick="app.toggleLock(this)">${this.isUnlocked ? '🔓' : '🔒'}</span>`;
+                el.insertAdjacentHTML('afterbegin', lockIconHTML);
+            });
+            
+            // 2. Load data dan render kotak dinamis tambahan
+            this.loadAndRenderDynamicBoxes('page1'); 
+            this.loadAndRenderDynamicBoxes('page2');
+            this.loadAndRenderDynamicBoxes('page3');
+        },
+        
+        loadAndRenderDynamicBoxes: function(page) {
+            const container = document.getElementById(`boxes-${page}`);
+            if (!container) return;
+            
+            const dynamicBoxes = JSON.parse(localStorage.getItem(`${page}-boxes`) || '[]');
+            
+            // Hapus semua box dinamis yang mungkin sudah terrender (untuk menghindari duplikasi)
+            container.querySelectorAll(`[data-key^="${page}-box-"]`).forEach(box => box.remove());
+            
+            dynamicBoxes.forEach(boxData => {
+                 this.renderSingleBox(container, boxData.key, boxData.content);
+            });
+        },
+        
+        saveBoxContent: function(key, content) {
+            // Buat elemen sementara untuk menghapus semua kontrol yang dinamis sebelum disimpan
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = content;
+            
+            // Hapus action buttons dan Lock Icon (karena selalu ditaruh kembali saat loadData)
+            tempDiv.querySelector('.box-actions')?.remove();
+            tempDiv.querySelector('.lock-icon')?.remove();
+            
+            // Hapus atribut contentEditable dari semua elemen anak sebelum disimpan (untuk 'kebersihan')
+             tempDiv.querySelectorAll('[data-editable-child="true"]').forEach(child => {
+                 child.removeAttribute('contenteditable');
+             });
+             
+            // Simpan konten tanpa kontrol
+            const cleanedContent = tempDiv.innerHTML;
+            localStorage.setItem(key, cleanedContent);
+
+            // Update array dynamic boxes jika ini kotak dinamis
+            const pageMatch = key.match(/^(page\d+)-box-/); // Cek format key kotak dinamis
+            if (pageMatch) {
+                const page = pageMatch[1]; // page1, page2, atau page3
+                const boxes = JSON.parse(localStorage.getItem(`${page}-boxes`) || '[]');
+                const index = boxes.findIndex(box => box.key === key);
+
+                if (index !== -1) {
+                    boxes[index].content = cleanedContent; 
+                } else {
+                     // Jika belum ada di array (kasus kotak baru yang belum di-save ke array)
+                     boxes.push({ key: key, content: cleanedContent }); 
+                }
+                localStorage.setItem(`${page}-boxes`, JSON.stringify(boxes));
+            }
+        },
+        
+        // ========== BOX MANAGEMENT ==========
+        
+        renderSingleBox: function(container, key, content, prepend = false) {
+             const tempDiv = document.createElement('div');
+             const isDynamicBox = !this.defaultBoxContents[key];
+             const lockedClass = this.isUnlocked ? 'editable' : 'locked';
+             // HANYA kotak dinamis yang contenteditable="true" di level box
+             const editable = String(this.isUnlocked && isDynamicBox); 
+             
+             tempDiv.className = `editable-box ${lockedClass}`;
+             tempDiv.contentEditable = editable;
+             tempDiv.dataset.key = key;
+             
+             // Konten utama ditaruh dulu (hanya konten, tanpa kontrol)
+             tempDiv.innerHTML = content;
+             
+             // Tambahkan ikon kunci
+             const lockIconHTML = `<span class="lock-icon" onclick="app.toggleLock(this)">${this.isUnlocked ? '🔓' : '🔒'}</span>`;
+             tempDiv.insertAdjacentHTML('afterbegin', lockIconHTML);
+
+             // Set contentEditable dan data-editable-child untuk elemen di dalamnya
+             tempDiv.querySelectorAll('.subjudul, .list-item').forEach(child => {
+                 child.setAttribute('data-editable-child', 'true');
+                 if (this.isUnlocked) {
+                    // Elemen anak selalu bisa diedit jika unlocked
+                    child.setAttribute('contenteditable', 'true'); 
+                 }
+             });
+             
+             // Tambahkan ke DOM
+             if (prepend) {
+                container.prepend(tempDiv);
+             } else {
+                container.appendChild(tempDiv);
+             }
+             
+             // Pastikan tombol aksi muncul di kotak baru
+             this.ensureBoxActionsExist();
+             
+             return tempDiv; // Kembalikan elemen baru
+        },
+
+
+        addBox: function(page) {
+            if (!this.isUnlocked) {
+                 this.showModal();
+                 return; 
+            }
+
+            const container = document.getElementById(`boxes-${page}`);
+            if (!container) return;
+
+            const key = `${page}-box-${Date.now()}`;
+            // Konten awal dinamis (TANPA ikon kunci dan action buttons/contenteditable)
+            const initialContent = `
+                <div class="subjudul" data-editable-child="true">Subjudul Baru</div>
+                <ul>
+                    <li class="list-item" data-editable-child="true">Item 1</li>
+                    <li class="list-item" data-editable-child="true">Item 2</li>
+                </ul>
+            `;
+            
+            // Render box baru (prepend=true agar muncul paling atas)
+            const newBox = this.renderSingleBox(container, key, initialContent, true);
+
+            // Simpan ke array dynamic boxes di LocalStorage
+            const boxes = JSON.parse(localStorage.getItem(`${page}-boxes`) || '[]');
+            boxes.push({ key: key, content: initialContent }); 
+            localStorage.setItem(`${page}-boxes`, JSON.stringify(boxes));
+            
+            // Simpan konten murni box ke LocalStorage (data per box)
+            this.saveBoxContent(key, newBox.innerHTML);
+                
+            // Fokus ke subjudul kotak baru agar langsung bisa diedit
+            newBox.querySelector('.subjudul')?.focus();
+        },
+        
+        // FUNGSI UTAMA: Persistensi Penghapusan
+        deleteBox: function(button) {
+            if (!this.isUnlocked) return this.showModal();
+            
+            const box = button.closest('.editable-box');
+            if (!box) return;
+            const key = box.dataset.key;
+            
+            let confirmMessage = "Yakin ingin menghapus kotak ini? Aksi ini tidak dapat diurungkan.";
+            
+            // Cek apakah kotak ini memiliki konten default (berarti kotak bawaan/hardcoded)
+            const isInitialBox = !!this.defaultBoxContents[key];
+
+            if (isInitialBox) {
+                confirmMessage = "PERHATIAN: Kotak ini adalah kotak bawaan. Jika Anda menghapusnya, kotak ini TIDAK AKAN MUNCUL LAGI saat halaman dimuat ulang/dibuka. Yakin ingin menghapus?";
+            }
+            
+            if (!confirm(confirmMessage)) return;
+
+            // 1. Hapus dari DOM
+            box.remove();
+            
+            // 2. Hapus dari LocalStorage (data yang sudah di-edit)
+            localStorage.removeItem(key);
+
+            // 3. Jika kotak bawaan, tambahkan kuncinya ke daftar 'deletedKeys' (untuk persistensi)
+            if (isInitialBox) {
+                if (!this.deletedKeys.includes(key)) {
+                    this.deletedKeys.push(key);
+                    localStorage.setItem('deletedKeys', JSON.stringify(this.deletedKeys));
+                }
+            } else {
+                // 4. Jika kotak dinamis, hapus dari array kotak dinamis
+                const pageMatch = key.match(/^(page\d+)-box-/); // Cek format key kotak dinamis
+                if (pageMatch) {
+                    const page = pageMatch[1];
+                    let boxes = JSON.parse(localStorage.getItem(`${page}-boxes`) || '[]');
+                    boxes = boxes.filter(b => b.key !== key);
+                    localStorage.setItem(`${page}-boxes`, JSON.stringify(boxes));
+                }
+            }
+            
+            alert("Kotak berhasil dihapus!");
+        },
+
+        // FUNGSI app.resetBox() DIHAPUS SEPENUHNYA
+        
+        // ========== LOCK/UNLOCK & MODAL ==========
+        toggleLock: function(icon) {
+            if (!this.isUnlocked) {
+                return this.showModal();
+            }
+
+            const box = icon.closest('.editable-box');
+            if (!box) return;
+            
+            const isCurrentlyLocked = box.classList.contains('locked');
+            // Status yang akan diterapkan (kebalikan dari isCurrentlyLocked)
+            const editableStatus = !isCurrentlyLocked; 
+            
+            // Cek apakah ini kotak dinamis (hanya kotak dinamis yang contenteditable="true" di level box)
+            const isDynamicBox = !this.defaultBoxContents[box.dataset.key];
+
+            // 1. Perbarui status konten dan kelas
+            box.classList.toggle('locked', !editableStatus);
+            box.classList.toggle('editable', editableStatus);
+            // Hanya kotak dinamis yang contenteditable="true" di level box
+            box.contentEditable = String(editableStatus && isDynamicBox); 
+            
+            // 2. Perbarui konten anak
+            box.querySelectorAll('[data-editable-child="true"]').forEach(child => {
+                if (editableStatus) {
+                    child.setAttribute('contenteditable', 'true');
+                } else {
+                    child.removeAttribute('contenteditable');
+                }
+            });
+            
+            // 3. Perbarui ikon
+            icon.textContent = editableStatus ? '🔓' : '🔒';
+            
+            // 4. Update tampilan action box
+            const actionBox = box.querySelector('.box-actions');
+            if (actionBox) actionBox.style.opacity = editableStatus ? 1 : 0;
+            
+            // 5. Simpan (penting)
+            this.saveBoxContent(box.dataset.key, box.innerHTML);
+        },
+
+        toggleAllLocks: function() {
+            if (this.isUnlocked) {
+                this.updateLockState(false);
+                alert('Semua konten dikunci!');
+            } else {
+                this.showModal();
+            }
+        },
+
+        showModal: function() {
+            const modal = document.getElementById('passwordModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                document.getElementById('pwInput')?.focus();
+            }
+        },
+
+        closeModal: function() {
+            const modal = document.getElementById('passwordModal');
+            if (modal) {
+                modal.style.display = 'none';
+                const pwInput = document.getElementById('pwInput');
+                if (pwInput) pwInput.value = '';
+            }
+        },
+
+        checkPassword: function() {
+            const pwInput = document.getElementById('pwInput');
+            if (!pwInput) return;
+
+            const pw = pwInput.value;
+            if (pw === this.CORRECT_PASSWORD) {
+                this.updateLockState(true);
+                this.closeModal();
+                alert('Akses edit dibuka!');
+            } else {
+                alert('Password salah!');
+                // Tidak menutup modal agar pengguna bisa coba lagi
+                pwInput.value = '';
+                pwInput.focus();
+            }
+        },
+
+
+        // ========== VISUAL EFFECTS ==========
+        createParticles: function() {
+            const particles = document.getElementById('particles');
+            if (!particles) return;
+
+            particles.innerHTML = '';
+
+            for (let i = 0; i < 40; i++) { 
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                const size = Math.random() * 3 + 1;
+                p.style.width = size + 'px';
+                p.style.height = size + 'px';
+                p.style.animationDelay = Math.random() * 20 + 's';
+                p.style.animationDuration = (Math.random() * 10 + 15) + 's';
+                particles.appendChild(p);
+            }
+        }
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        app.init();
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && document.getElementById('passwordModal')?.style.display === 'flex') {
+            app.checkPassword();
+        }
+    });
+</script>
+</body>
+</html>        padding: 1rem 2rem;
+        box-shadow: 0 4px 30px rgba(0, 255, 255, 0.1);
+        display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+        transform: scale(1.05);
+    }
+
+    /* ========== MENU & DROPDOWN ========== */
+    .menu-toggle {
+        display: flex;
+        background: rgba(0, 255, 255, 0.1);
+        border: 1px solid var(--primary-color);
+        border-radius: 25px;
+        padding: 0.8rem;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.2);
+        position: relative;
+    }
+
+    .menu-toggle:hover {
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        transform: scale(1.05);
+    }
+
+    .hamburger {
+        display: flex; flex-direction: column; gap: 4px;
+    }
+
+    .hamburger span {
+        width: 25px; height: 3px;
+        background: var(--text-color);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active .hamburger span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .menu-toggle.active .hamburger span:nth-child(2) { opacity: 0; }
+    .menu-toggle.active .hamburger span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+
+    .dropdown {
+        display: none;
+        position: absolute; top: 100%; right: 0;
+        background: rgba(0,0,0,0.95);
+        border: 1px solid var(--primary-color);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-top: 0.5rem;
+        box-shadow: 0 8px 32px rgba(0, 255, 255, 0.2);
+        min-width: 200px;
+        z-index: 1001;
+    }
+
+    .dropdown.active { display: block; }
+
+    .dropdown .nav-btn {
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.8rem 1rem;
+        border: none;
+        background: transparent;
+        color: var(--text-color);
+        cursor: pointer;
+        border-radius: 10px;
+        transition: var(--transition);
+        position: relative; overflow: hidden;
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .dropdown .nav-btn:last-child { margin-bottom: 0; }
+
+    .dropdown .nav-btn::before {
+        content: '';
+        position: absolute; top: 50%; left: 50%;
+        width: 0; height: 0;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .dropdown .nav-btn:active::before {
+        width: 200px; height: 200px;
+    }
+
+    .dropdown .nav-btn:hover, .dropdown .nav-btn.active {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+        transform: scale(1.02);
+    }
+
+    /* ========== NEW LOADING SPINNER CSS ========== */
+    .loading {
+        display: none;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.8);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 5px solid rgba(0, 255, 255, 0.3);
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+    /* ========== SEARCH INPUT CSS BARU ========== */
+    .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+    }
+    
+    .search-input {
+        width: 100%;
+        max-width: 600px;
+        padding: 0.8rem 1.5rem;
+        border: 2px solid var(--primary-color);
+        background: var(--bg-medium);
+        color: var(--text-color);
+        border-radius: 30px;
+        font-size: 1rem;
+        transition: box-shadow 0.3s, border-color 0.3s;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+    }
+
+
+    /* ========== PAGES & CONTENT ========== */
+    .page {
+        display: none;
+        min-height: 100vh;
+        padding: 8rem 2rem 2rem;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: var(--transition);
+    }
+
+    .page.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1rem; /* Kurangi margin karena ada search box */
+        font-size: 3rem;
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    }
+
+    .subjudul {
+        margin: 2rem 0 0.5rem; 
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+        padding-bottom: 0.5rem;
+        position: relative;
+    }
+
+    .subjudul::after {
+        content: '';
+        position: absolute; bottom: -2px; left: 0;
+        width: 0; height: 2px;
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        transition: width 0.3s ease;
+    }
+
+    .subjudul:hover::after { width: 100%; }
+
+    /* ========== EDITABLE BOXES ========== */
+    .editable-box {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid rgba(0, 255, 255, 0.3);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+        transition: var(--transition);
+        cursor: default;
+        position: relative;
+        overflow: hidden;
+        user-select: none;
+    }
+
+    .editable-box.editable {
+        cursor: text;
+        user-select: text;
+    }
+
+    .editable-box::before {
+        content: '';
+        position: absolute; top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+        transition: left 0.5s;
+    }
+
+    .editable-box:hover::before { left: 100%; }
+
+    .editable-box:hover {
+        box-shadow: 0 12px 40px rgba(0, 255, 255, 0.3);
+        transform: translateY(-5px) scale(1.02);
+        border-color: var(--primary-color);
+    }
+
+    .editable-box.locked {
+        cursor: not-allowed;
+    }
+
+    .editable-box.locked:hover { 
+        transform: none; 
+        box-shadow: 0 8px 32px rgba(0, 255, 255, 0.1);
+    }
+    
+    /* Lock Icon */
+    .lock-icon {
+        position: absolute; top: 10px; right: 10px;
+        font-size: 1.2rem;
+        color: var(--secondary-color);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+
+    .lock-icon:hover {
+        color: var(--text-color);
+        transform: rotate(180deg) scale(1.2);
+    }
+    
+    .list-item {
+        list-style: none;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        transition: all 0.3s ease;
+        /* Tambahkan kursor agar terlihat bisa di-klik */
+        cursor: copy; 
+        /* Ganti font untuk terlihat lebih 'kode' dan seragam */
+        font-family: 'Consolas', 'Courier New', monospace; 
+        font-size: 0.95rem;
+        white-space: pre-wrap; /* Pastikan teks panjang tetap bisa di-wrap */
+    }
+    
+    .list-item:last-child {
+        border-bottom: none;
+    }
+
+    .list-item:hover { color: var(--primary-color); }
+
+    .add-btn {
+        background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        color: #000;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        cursor: pointer;
+        margin: 1rem 0;
+        font-weight: bold;
+        transition: var(--transition);
+        box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    .add-btn:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    /* Kontrol Aksi Box (Delete & Reset) */
+    .box-actions {
+        position: absolute;
+        top: 10px;
+        left: 15px;
+        display: flex;
+        gap: 10px;
+        z-index: 10;
+        opacity: 0; 
+        transition: opacity 0.3s;
+    }
+    
+    .action-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: var(--text-color);
+        padding: 4px 8px;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    .action-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .action-btn.delete:hover { background: rgba(255, 0, 0, 0.5); border-color: red; }
 
     /* Pastikan tombol aksi terlihat saat hover pada kotak */
     .editable-box:hover .box-actions {
@@ -1009,4 +2288,5 @@
     });
 </script>
 </body>
+
 </html>
